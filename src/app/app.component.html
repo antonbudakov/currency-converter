@@ -1,11 +1,22 @@
-<h1>{{title}}</h1>
-<form>
+<h1>{{title|uppercase}}</h1>
+<ng-container *ngIf="currencies.length==0 then noCurrency else currency">
+</ng-container>
+<ng-template #currency>
+ <form>
   <span>Currency1</span>
   <input type="number" (input)="firstInput($event)">
   <p>{{first}}</p>
-</form>
-<form>
+ </form>
+ <form>
   <span>Currency2</span>
   <input type="number" (input)="secondInput($event)">
   <p>{{second}}</p>
-</form>
+ </form>
+ <p *ngFor="let curr of currencies">
+  {{(currencies.length==1?'Одна валюта: ':'')+
+  (curr.value|currency:curr.name:'symbol':'.0-2'|currencyTitle:curr.name)}} 
+ </p>
+</ng-template>
+<ng-template #noCurrency>
+ <p>Немає валют</p>
+</ng-template>
