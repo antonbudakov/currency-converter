@@ -1,4 +1,4 @@
-<h1>{{title|uppercase}}</h1>
+<h1  appTitle>{{title|uppercase}}</h1>
 
 <ng-container *ngIf="currencies.length==0 then noCurrency else currency">
 </ng-container>
@@ -18,7 +18,7 @@
  
  <p *ngFor="let curr of currencies">
   {{(currencies.length==1?'Одна валюта: ':'')+
-  (curr.value|currency:curr.name:'symbol':'.0-2'|currencyTitle:curr.name)}} 
+  (curr.value|currency:curr.name:'code':'.0-2'|currencyTitle)}} 
  </p>
 </ng-template>
 

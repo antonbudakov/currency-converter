@@ -5,8 +5,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class CurrencyTitlePipe implements PipeTransform {
 
-  transform(value: unknown, ...args: unknown[]): unknown {
-    return ((args?.[0]+' ')||'')+value||' ';
+  transform(value: string|null): unknown {
+    return value?.slice(0,3)+' '+value?.slice(3);
   }
 
 }
