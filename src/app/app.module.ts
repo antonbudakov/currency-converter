@@ -1,16 +1,20 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { CurrencyTitlePipe } from './pipes/currency-title.pipe';
+import { TitleDirective } from './directives/title.directive';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CurrencyTitlePipe
+    CurrencyTitlePipe,
+    TitleDirective
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
