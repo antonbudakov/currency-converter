@@ -5,38 +5,21 @@
 
 <ng-template #currency>
  <form [formGroup]="form" appTitle>
-  <!-- <span>{{currencies[index_from].txt}}</span><br> -->
   <select formControlName="currency1">
-    <option *ngFor="let curr1 of currencies" value="{{curr1.rate}}">
+    <option *ngFor="let curr1 of currencies" value="{{curr1.cc}}">
     {{curr1.txt}}
     </option>
   </select><br>
-  <input type="number"  formControlName="sum1" (input)="firstInput()"><br>
-  <!-- <p>{{first}}</p> -->
- <!-- </form> 
-
- <form [formGroup]="form" appTitle> -->
-  <!-- <span>{{currencies[index_to].txt}}</span><br> -->
-  <input type="button" (click)="onChangeClick()"><br>
+  <input type="text"  formControlName="sum1" (input)="firstInput()"><br>
+  <input type="button" value="Змінити валюти" (click)="onChangeClick()"><br>
   <select formControlName="currency2">
-    <option *ngFor="let curr2 of currencies" value="{{curr2.rate}}">
+    <option *ngFor="let curr2 of currencies" value="{{curr2.cc}}">
     {{curr2.txt}}
     </option>
   </select><br>
-  <input type="number" formControlName="sum2" (input)="secondInput()">
-  <!-- <p>{{second|currency:form.value.:'code':'.0-2'|currencyTitle}}</p> -->
+  <input type="text" formControlName="sum2" (input)="secondInput()">
+  <p>{{(1|currency:first?.cc:'code':'.0-2'|currencyTitle)+' = '+(rate||0|currency:second?.cc:'code':'.0-2'|currencyTitle)}}</p>
  </form>
- <!-- <table>
-    <tr>
-        <th>Валюта</th>
-        <th>Курс</th>
-    </tr>
-    <tr *ngFor="let curr of currencies">
-        <td>{{curr.txt}}</td>
-        <td>{{(currencies.length==1?'Одна валюта: ':'')+
-            (curr.rate|currency:curr.cc:'code':'.0-2'|currencyTitle)}}</td>
-    </tr>
- </table> -->
 </ng-template>
 
 <ng-template #noCurrency>
