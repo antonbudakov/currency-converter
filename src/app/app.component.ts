@@ -8,11 +8,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-onChangeClick() {
-  let curr=this.form.value.currency1;
-  this.form.controls['currency1'].patchValue(this.form.value.currency2);
-  this.form.controls['currency2'].patchValue(curr);
-}
+
   first: any;
   second: any;
   rate: number=0;
@@ -24,14 +20,12 @@ onChangeClick() {
 
     this.form=formBuilder.group({  
       currency1:localStorage.getItem('currency1_value')||'EUR',  
-      currency2:localStorage.getItem('currency2_value')||'UAH',
+      currency2:localStorage.getItem('currency2_value')||'USD',
       sum1:[0,Validators.pattern('^[-+]?([0-9]+\.)?[0-9]+$')],
       sum2:[0,Validators.pattern('^[-+]?([0-9]+\.)?[0-9]+$')]
     });
 
     currenciesService.get().subscribe(val=>{this.currencies=val;
-      this.currencies.unshift(
-        {"r030":36,"txt":"Українська гривня","rate":1,"cc":"UAH","exchangedate":"16.08.2023"});
         this.first=this.currencies.find(x=>x.cc==this.form.value.currency1);  
         this.second=this.currencies.find(x=>x.cc==this.form.value.currency2);
         this.rate=this.first?.rate/this.second?.rate;
@@ -54,21 +48,27 @@ onChangeClick() {
     if (this.form.valid)
     {
       this.rate=this.first?.rate/this.second?.rate;
-      this.form.controls['sum2'].patchValue(Number(this.form.value?.sum1*this.rate));
+      this.form.controls['sum2'].patchValue(Math.round(this.form.value?.sum1*this.rate*1000)/1000);
     }
   }
   
   firstInput(){  
     if (this.form.valid)
-      this.form.controls['sum2'].patchValue(this.form.value?.sum1*(this.first.rate/this.second.rate));    
+      this.form.controls['sum2'].patchValue(Math.round(this.form.value?.sum1*this.first.rate/this.second.rate*1000)/1000);    
     else
       this.form.controls['sum2'].patchValue(0);
   }
 
   secondInput(){
     if (this.form.valid)
-      this.form.controls['sum1'].patchValue(this.form.value?.sum2*(this.second.rate/this.first.rate))
+      this.form.controls['sum1'].patchValue(Math.round(this.form.value?.sum2*this.second.rate/this.first.rate*1000)/1000)
     else
       this.form.controls['sum1'].patchValue(0);
+  }
+
+  onChangeClick() {
+    let curr=this.form.value.currency1;
+    this.form.controls['currency1'].patchValue(this.form.value.currency2);
+    this.form.controls['currency2'].patchValue(curr);
   }
 }
