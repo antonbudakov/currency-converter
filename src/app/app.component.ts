@@ -7,7 +7,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
   first: any;
   second: any;
@@ -24,8 +24,10 @@ export class AppComponent {
       sum1:[0,Validators.pattern('^[-+]?([0-9]+\.)?[0-9]+$')],
       sum2:[0,Validators.pattern('^[-+]?([0-9]+\.)?[0-9]+$')]
     });
+  }
 
-    currenciesService.get().subscribe(val=>{this.currencies=val;
+  ngOnInit(): void {
+    this.currenciesService.get().subscribe(val=>{this.currencies=val;
         this.first=this.currencies.find(x=>x.cc==this.form.value.currency1);  
         this.second=this.currencies.find(x=>x.cc==this.form.value.currency2);
         this.rate=this.first?.rate/this.second?.rate;
